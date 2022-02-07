@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/04 21:13:33 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/07 17:33:36 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,7 @@ int	sort_checka(t_stack *stack)
 	return (1);
 }
 
-/*int	sort_checkb(t_stack *stack)
+int	sort_checkb(t_stack *stack)
 {	
 	int i;
 
@@ -334,22 +334,49 @@ int	sort_checka(t_stack *stack)
 				return (0);
 			i--;
 		}
-		return (1);
 	}
-	return (0);
-}*/
-int sort_checkthree(t_stack *stack)
+	return (1);
+}
+
+int sort_checkbr(t_stack *stack)
 {
-	if (stack->ab[stack->atop] < stack->ab[stack->atop + 1] && stack->ab[stack->atop  + 1] < stack->ab[stack->size - 1])
+	int i;
+
+	i = stack->atop -1;
+	if (i > 0)
+	{
+		while (i > 0)
+		{
+			if (stack->ab[i] < stack->ab[i -1])
+				return (0);
+			i--;
+		}
+	}
+	return (1);
+}
+
+int sort_checkthreea(t_stack *stack)
+{
+	if (stack->ab[stack->atop] < stack->ab[stack->atop + 1] && stack->ab[stack->atop  + 1] > stack->ab[stack->size - 1])
 		return (1);
 	else
 		return (0);
 }
 
+int sort_checktreebr(t_stack *stack)
+{
+	if (stack->ab[stack->atop] - 1 > 1)
+	{
+		if (stack->ab[stack->atop] - 1 > stack->ab[stack->atop - 2] && stack->ab[stack->atop -1] < stack->ab[stack->size - 1])
+			return (1);
+		else 
+			return (0);
+	}
+}
+
 void	sort_1(t_stack *stack)
 {
-	
-	while(!sort_checkthree(stack))
+	while(!sort_check(stack))
 	{
 		if (stack->ab[stack->atop] > stack->ab[stack->size - 1])
 		{
@@ -360,10 +387,8 @@ void	sort_1(t_stack *stack)
 		}
 		else
 			sa(stack,1);
-	}
-		
+	}		
 }
-
 void	sort_2(t_stack *stack)
 {
 	while(!sort_check(stack))
@@ -374,19 +399,20 @@ void	sort_2(t_stack *stack)
 		ra(stack, 1);
 	}
 }
-
 void	sort_3(t_stack *stack)
 {
 	int i;
 
-	i = 0;
+	i = stack->size/2;
+	j = i;
 	while(!sort_check(stack))
 	{
 		while (!sort_checka(stack))
 		{
+		
 			if (stack->ab[stack->atop] > stack->ab[stack->atop + 1] && stack ->ab[stack->atop] != stack->size - 1)
 				sa(stack, 1);
-			if (stack->ab[stack->atop] == i)
+			if (stack->ab[stack->atop] i)
 			{
 				pb(stack, 1);
 				i++;
@@ -394,9 +420,10 @@ void	sort_3(t_stack *stack)
 			else
 				ra(stack, 1);
 		}
-		pa(stack, 1);
+		pa(stack, 1);:wq
 	}
 }
+
 
 void	sort_4(t_stack *stack)
 {
@@ -413,11 +440,27 @@ void	sort_4(t_stack *stack)
 				pb(stack, 1);
 				i++;
 			}
-			else
+			else                                                                                                                                                                                                                                                        
 				ra(stack, 1);
 		}
 		pa(stack, 1);
 	}
+}
+
+
+/*void	action_1(t_stack *stack)
+{
+	while
+}*/
+
+void	sort_5(t_stack *stack)
+{
+	while(!sort_check(stack))
+	{	
+		while (stack->atop < stack->size / 2)
+		{
+			
+		}	
 }
 /*****************************************************intmain*/
 
@@ -432,10 +475,10 @@ int main(int argc, char **argv)
 	stack->size = argc-1;
 	init_sort(stack);
 	init_ab(stack);
-	sort_3(stack);
-//	print_stack(stack->inial, stack->atop, argc-1);
-//	print_stack(stack->sort, stack->atop, argc-1);
-//	print_stack(stack->ab, stack->atop, argc-1);
+	sort_1(stack);
+	print_stack(stack->inial, stack->atop, argc-1);
+	print_stack(stack->sort, stack->atop, argc-1);
+	print_stack(stack->ab, stack->atop, argc-1);
 	free(stack->ab);
 	free(stack->inial);
 	free(stack->sort);
