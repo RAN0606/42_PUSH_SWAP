@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/08 17:10:23 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/09 19:09:52 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -467,20 +467,78 @@ void	sort_4(t_stack *stack)
 		}
 		pa(stack, 1);
 	}
-}
+}*/
 
-void	sort_5(t_stack *stack)
+int	checksize(int *k, int size)
 {
 	int i;
 
-	
-}*/
+	i = 0;
+	while (i < size)
+	{ 
+		if (k[i] < 9)
+			return (1);
+	}
+	return (0);
+}
+
+
+void	comt(int *k, int size)
+{
+	int i;
+	i = 0;
+	while (i < size && k[i])
+	{
+		if (k[i] == 12)
+		{
+			k[i] = 1;
+			k[i+1] += 1;
+		}
+		i++;
+	}
+}
+
+void	sort_5(t_stack *stack, int size)
+{
+//	char	*opp[size + 1];
+	f		op[11]={&sa,&ra,&rra,&pb,&ss,&sb,&rr,&rb,&rrr,&rrb,&pa};
+//	f		opr[11]={&ss,&rrr,&rr,&sa,&sb,&rra,&rrb,&ra,&rb};
+	char	*ops[11]={"sa\n", "ra\n", "rra\n","pb\n" "ss\n", "sb\n", "rr\n", "rb\n", "rrr\n", "rrb\n", "pa\n"};
+	int	i;
+//	int j;
+	int *k;
+
+	k = malloc(size* sizeof(int));
+	i = -1;
+	while (++i < size)
+		k[i] = 0;
+	while (!sort_check(stack))
+	{
+		init_ab(stack);
+		i = 0;
+		k[i] += 1;
+		comt(k, size);
+		while (i < size && k[i])
+		{
+			op[k[i]-1](stack, 1, 0);
+			i++;
+		}
+	}
+	i = 0;
+	if (sort_check(stack))
+	{
+		while (i < size && k[i])
+		{
+			ft_putstr_fd(ops[k[i]-1], 1);
+			i++;
+		}
+	}
+}
 /*****************************************************intmain*/
 
 int main(int argc, char **argv)
 {
 	t_stack *stack;
-	f    op[2]={&sa,&pb};
 
 	stack = malloc(sizeof(t_stack));
 	stack->inial = init_list(argc, argv);
@@ -489,9 +547,18 @@ int main(int argc, char **argv)
 	stack->size = argc-1;
 	init_sort(stack);
 	init_ab(stack);
-//	sort_1(stack);
-	print_stack(stack->inial, stack->atop, argc-1);
-	print_stack(stack->sort, stack->atop, argc-1);
+/*	pb(stack,1,1);
+	ss(stack,1,1);
+	sa(stack,1,1);
+	ra(stack,1,1);
+		
+	ra(stack,1,1);
+	ra(stack,1,1);
+	sa(stack,1,1);
+*/		
+	sort_5(stack,200);
+//	print_stack(stack->inial, stack->atop, argc-1);
+//	print_stack(stack->sort, stack->atop, argc-1);
 	print_stack(stack->ab, stack->atop, argc-1);
 	free(stack->ab);
 	free(stack->inial);
