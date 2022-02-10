@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/09 19:09:52 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/10 21:52:33 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,22 +396,119 @@ int sort_checkthreea(t_stack *stack)
 	}
 }*/
 /**********************************************************************/
-/*void	sort_1(t_stack *stack)
+void	sort_1_3(t_stack *stack)
 {
-	while(!sort_check(stack))
+	while(!sort_checka(stack))
 	{
 		if (stack->ab[stack->atop] > stack->ab[stack->size - 1])
 		{
 			if (stack->ab[stack->atop] > stack->ab[stack->atop + 1])
-				ra(stack,1);
+				ra(stack,1,1);
 			else
-				rra(stack,1);
+				rra(stack,1,1);
 		}
 		else
-			sa(stack,1);
+			sa(stack,1,1);
 	}		
+	print_stack(stack->ab, stack->atop, stack->size);
 }
-void	sort_2(t_stack *stack)
+void	insert_1(t_stack *stack)
+{
+	int x;
+	int y;
+	int size;
+
+	size = stack->size;
+	x = stack->atop;
+	while (stack->ab[stack->atop-1] > stack->ab[x] && x < size)
+	{
+		if (x < size - 1 && stack->ab[x] > stack->ab[x+1])
+		{
+			x++;
+			break;
+		}
+		x++;
+	}
+	if (x - stack->atop <= (size-stack->atop)/2)
+	{
+		y = x-stack->atop;
+		while(y-- > 0)
+			ra(stack, 1, 1);
+		pa(stack, 1, 1);	
+	}
+	else
+	{
+		y = size-x;
+		while (y-- > 0)
+			rra(stack, 1 , 1);
+		pa(stack, 1, 1);
+	}
+
+}
+void	tour_1(t_stack *stack, int x)
+{
+	int i;
+	int y;
+	int size;
+	
+	i = stack->atop;
+	size =stack->size;
+	while (i < size)
+	{
+		if (stack->ab[i] == x)
+			break;
+		i++;
+	}
+	if (i - stack->atop < (size-stack->atop)/2)
+	{
+		y = i-stack->atop;
+		while(y-- > 0)
+			ra(stack, 1, 1);
+	}
+	else
+	{
+		y = size-i;
+		while (y-- > 0)
+			rra(stack, 1 , 1);
+	}
+}
+
+/*int check_atour(t_stack *stack)
+{
+	int i;
+	
+	i = stack->atop;
+	while (i < stack->size)
+	{
+		if ()
+
+	}
+}*/
+
+void sort_1_5(t_stack *stack)
+{
+	int i;
+	int x;
+
+	x = stack->size;
+	i = 0;
+	if (!sort_check(stack))
+	{
+		while (i < stack->size / 2)
+		{
+			i++;
+			pb(stack, 1, 1);
+		}
+		sort_1_3(stack);
+		while (i-- > 0)
+			insert_1(stack);
+		tour_1(stack, 0);
+	}
+}
+
+
+
+/*void	sort_2(t_stack *stack)
 {
 	while(!sort_check(stack))
 	{
@@ -434,6 +531,21 @@ void	sort_3(t_stack *stack)
 		
 			if (stack->ab[stack->atop] > stack->ab[stack->atop + 1] && stack ->ab[stack->atop] != stack->size - 1)
 				sa(stack, 1);
+	int i;
+
+	i = 0;
+	while(!sort_check(stack))
+	{
+		while (!sort_checka(stack))
+		{
+			sort_1(stack);
+			if (stack->ab[stack->atop] == i)
+			{
+				pb(stack, 1);
+				i++;
+			}
+			else                                                                                                                                                                                                                                                        
+			
 			if (stack->ab[stack->atop] i)
 			{
 				pb(stack, 1);
@@ -501,39 +613,72 @@ void	comt(int *k, int size)
 void	sort_5(t_stack *stack, int size)
 {
 //	char	*opp[size + 1];
-	f		op[11]={&sa,&ra,&rra,&pb,&ss,&sb,&rr,&rb,&rrr,&rrb,&pa};
+	f		op[11]={&pb,&sa,&ra,&rra,&ss,&rr,&rrr,&pa,&sb,&rb,&rrb};
 //	f		opr[11]={&ss,&rrr,&rr,&sa,&sb,&rra,&rrb,&ra,&rb};
-	char	*ops[11]={"sa\n", "ra\n", "rra\n","pb\n" "ss\n", "sb\n", "rr\n", "rb\n", "rrr\n", "rrb\n", "pa\n"};
+	char	*ops[11]={"pb\n", "ss\n", "rr\n", "rrr\n","sa\n" "ra\n", "rra\n", "sb\n", "rb\n", "rrb\n", "pa\n"};
 	int	i;
 //	int j;
-	int *k;
-
-	k = malloc(size* sizeof(int));
+	int k[size];
 	i = -1;
 	while (++i < size)
-		k[i] = 0;
+		k[i] = -1;
 	while (!sort_check(stack))
 	{
+//		write(1,"test0\n",6);
 		init_ab(stack);
-		i = 0;
-		k[i] += 1;
-		comt(k, size);
-		while (i < size && k[i])
+		stack->atop = 0;
+		k[0] += 1;
+		if (k[0] == 11)
 		{
-			op[k[i]-1](stack, 1, 0);
+//			write(1,"test1\n",6);
+			i = 0;
+			while (i < size && k[i] > -1)
+			{
+//				write(1,"test2\n",6);
+				if (k[i] == 11 && i < size  - 1)
+				{
+					k[i] = 0;
+					k[i + 1] += 1;
+				}
+				else if (k[i] == 11 && i == size - 1)
+					return;
+				i++;
+			}
+		}
+		i = 0;
+		while (i < size && k[i] > -1)
+		{	
+//			write(1,"operation\n", 2);
+			op[k[i]](stack, 1, 0);
+//			print_stack(stack->ab, stack->atop, 5);
 			i++;
 		}
 	}
 	i = 0;
 	if (sort_check(stack))
 	{
-		while (i < size && k[i])
+		while (i < size && k[i] > -1)
 		{
-			ft_putstr_fd(ops[k[i]-1], 1);
+			op[k[i]](stack, 0 , 1);
 			i++;
 		}
 	}
 }
+
+/*int	check_i(int x, int y)
+{
+	return (y - x);
+}
+void sort_6(t_stack stack)
+{
+	int i;
+	i = 0;
+	while (!sort_check(stack))
+	{
+		
+	}
+		
+}*/
 /*****************************************************intmain*/
 
 int main(int argc, char **argv)
@@ -555,8 +700,9 @@ int main(int argc, char **argv)
 	ra(stack,1,1);
 	ra(stack,1,1);
 	sa(stack,1,1);
-*/		
-	sort_5(stack,200);
+*/
+
+	sort_1_5(stack);
 //	print_stack(stack->inial, stack->atop, argc-1);
 //	print_stack(stack->sort, stack->atop, argc-1);
 	print_stack(stack->ab, stack->atop, argc-1);
