@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/10 21:52:33 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/11 12:38:14 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,8 +410,9 @@ void	sort_1_3(t_stack *stack)
 		else
 			sa(stack,1,1);
 	}		
-	print_stack(stack->ab, stack->atop, stack->size);
+//	print_stack(stack->ab, stack->atop, stack->size);
 }
+
 void	insert_1(t_stack *stack)
 {
 	int x;
@@ -420,14 +421,25 @@ void	insert_1(t_stack *stack)
 
 	size = stack->size;
 	x = stack->atop;
-	while (stack->ab[stack->atop-1] > stack->ab[x] && x < size)
+	y = size;
+	if (stack->ab[stack->atop-1] > stack->ab[x])
 	{
-		if (x < size - 1 && stack->ab[x] > stack->ab[x+1])
+		while (stack->ab[stack->atop-1] > stack->ab[x]  && x < size)
 		{
 			x++;
-			break;
+			if (stack->ab[x] <  stack->ab[x-1] && x < size)
+				break;
 		}
-		x++;
+	}
+	else 
+	{
+		while (stack->ab[stack->atop-1] < stack->ab[y-1] && y > stack->atop)
+		{
+			y--;
+			if (stack->ab[y-1] > stack->ab[y] && y > stack->atop)
+				break;
+		}
+		x = y;
 	}
 	if (x - stack->atop <= (size-stack->atop)/2)
 	{
@@ -485,6 +497,8 @@ void	tour_1(t_stack *stack, int x)
 	}
 }*/
 
+
+
 void sort_1_5(t_stack *stack)
 {
 	int i;
@@ -494,19 +508,52 @@ void sort_1_5(t_stack *stack)
 	i = 0;
 	if (!sort_check(stack))
 	{
-		while (i < stack->size / 2)
+		while  (stack->ab[stack->atop] > x/2)
 		{
 			i++;
 			pb(stack, 1, 1);
+			if (stack->ab[stack->atop-1] < x*3/4 && stack->ab[stack->atop-1]>= x*3/4 && stack->atop > 1)
+			{
+				if (stack->ab[stack->atop] <= x/2)
+					rr(stack, 1, 1);
+				else
+					rb(stack, 1, 1);
+			}
+			else
+				ra(stack, 1, 1);
+			}
 		}
+		while(stack->atop < stack->size)
+		{
+			i++;
+			pb(stack, 1, 1);
+			if (stack->ab[stack->atop-1] < x/4)
+					rb(stack, 1, 1);
+		}
+			pa(stack, 1 , 1);
+			pa(stack, 1, 1);
+			pa(stack, 1, 1);
+			i--;
+	
+
+//			print_stack(stack->ab, stack->atop, stack->size);
+
+	
 		sort_1_3(stack);
+//		print_stack(stack->ab, stack->atop, stack->size);
+
 		while (i-- > 0)
+		{
 			insert_1(stack);
+//			print_stack(stack->ab, stack->atop, stack->size);
+
+		}
 		tour_1(stack, 0);
-	}
+	
 }
 
 
+//void	sort_1_more(t_stack *stack)
 
 /*void	sort_2(t_stack *stack)
 {
@@ -705,7 +752,7 @@ int main(int argc, char **argv)
 	sort_1_5(stack);
 //	print_stack(stack->inial, stack->atop, argc-1);
 //	print_stack(stack->sort, stack->atop, argc-1);
-	print_stack(stack->ab, stack->atop, argc-1);
+//	print_stack(stack->ab, stack->atop, argc-1);
 	free(stack->ab);
 	free(stack->inial);
 	free(stack->sort);
