@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/11 12:38:14 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/11 15:27:43 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -409,9 +409,24 @@ void	sort_1_3(t_stack *stack)
 		}
 		else
 			sa(stack,1,1);
-	}		
-//	print_stack(stack->ab, stack->atop, stack->size);
+	}
 }
+void	sort_1_3b(t_stack *stack)
+{
+	while (!sort_checkb(stack))
+	{
+		if (stack->ab[stack->atop-1] > stack ->ab[0])
+		{
+			if (stack->ab[stack->atop - 1] > stack->ab[stack->atop - 2])
+				rb(stack , 1, 1);
+			else
+				rrb(stack, 1, 1);
+		}
+		else
+			sb(stack,1, 1);
+	}
+}	
+//	print_stack(stack->ab, stack->atop, stack->size);
 
 void	insert_1(t_stack *stack)
 {
@@ -457,6 +472,90 @@ void	insert_1(t_stack *stack)
 	}
 
 }
+void	insert_1b(t_stack *stack)
+{
+	int x;
+	int y;
+	x= stack->atop-1;
+	y= 0;
+	if (stack->ab[stack->atop] > stack->ab[x] && x >= 0)
+	{
+		while (stack->ab[stack->atop] > stack->ab[x] && x >= 0)
+		{
+			x--;
+			if (stack->ab[x] < stack->ab[x+1] && x >=0)
+				break;
+		}
+	}
+	else
+	{
+		while (stack->ab[stack->atop < stack->ab[y]] && y < stack->atop )
+		{	
+			y++;
+			if (stack->ab[y] > stack->ab[y-1] && y < stack->atop ) 
+				break;
+		}
+		x = y;
+	}
+	if (x > (stack->atop-1)/2)
+	{
+		y = x - stack->atop -1;
+		while(y-- > 0)
+			rb(stack, 1, 1);
+		pb(stack, 1, 1);	
+	}
+	else
+	{
+		y = x;
+		while (y-- > 0)
+			rrb(stack, 1 , 1);
+		pb(stack, 1, 1);
+	}
+}
+
+void	insert_1br(t_stack *stack)
+{
+	int x;
+	int	y;
+
+
+	x= stack->atop-1;
+	y= 0;
+	if (stack->ab[stack->atop] < stack->ab[x] && x >= 0)
+	{
+		while (stack->ab[stack->atop] < stack->ab[x] && x >= 0)
+		{
+			x--;
+			if (stack->ab[x] > stack->ab[x+1] && x >=0)
+				break;
+		}
+	}
+	else
+	{
+		while (stack->ab[stack->atop > stack->ab[y]] && y < stack->atop )
+		{	
+			y++;
+			if (stack->ab[y] < stack->ab[y-1] && y < stack->atop ) 
+				break;
+		}
+		x = y;
+	}
+	if (x > (stack->atop-1)/2)
+	{
+		y = x - stack->atop -1;
+		while(y-- > 0)
+			rb(stack, 1, 1);
+		pb(stack, 1, 1);	
+	}
+	else
+	{
+		y = x;
+		while (y-- > 0)
+			rrb(stack, 1 , 1);
+		pb(stack, 1, 1);
+	}
+}
+
 void	tour_1(t_stack *stack, int x)
 {
 	int i;
@@ -485,6 +584,15 @@ void	tour_1(t_stack *stack, int x)
 	}
 }
 
+/*void	tour_1b(t_stack *stack, int x)
+{
+	int i;
+	int y;
+	int size;
+	
+	i = stack->atop;
+	size = stack->size;
+}*/
 /*int check_atour(t_stack *stack)
 {
 	int i;
@@ -550,6 +658,12 @@ void sort_1_5(t_stack *stack)
 		}
 		tour_1(stack, 0);
 	
+}
+
+void sort_1_6 (t_stack *stack)
+{
+
+
 }
 
 
