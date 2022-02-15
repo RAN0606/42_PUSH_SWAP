@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_a.c                                           :+:      :+:    :+:   */
+/*   backtracking.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/11 15:27:43 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/15 12:40:00 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -660,12 +660,6 @@ void sort_1_5(t_stack *stack)
 	
 }
 
-void sort_1_6 (t_stack *stack)
-{
-
-
-}
-
 
 //void	sort_1_more(t_stack *stack)
 
@@ -863,7 +857,7 @@ int main(int argc, char **argv)
 	sa(stack,1,1);
 */
 
-	sort_1_5(stack);
+	sort_5(stack,13);
 //	print_stack(stack->inial, stack->atop, argc-1);
 //	print_stack(stack->sort, stack->atop, argc-1);
 //	print_stack(stack->ab, stack->atop, argc-1);

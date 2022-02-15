@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pushswap1.c                                        :+:      :+:    :+:   */
+/*   pushswap2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/14 18:44:22 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/15 15:25:09 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -773,7 +773,8 @@ void insert_lazy(t_stack *stack, int range)
 //		z = cont(x,y);
 //		ft_putnbr_fd(z,1);
 //		write(1,"z\n",2);
-		if ( stack->ab[i] >= range &&(z < pos[2] || i == stack->atop-1))
+		z = cont(y,x);
+		if ( stack->ab[i] >= range &&((z < pos[2] && z>=0) || i == stack->atop-1))
 		{
 			pos[0] = y;
 			pos[1] = x;
@@ -782,10 +783,12 @@ void insert_lazy(t_stack *stack, int range)
 //			ft_putnbr_fd(pos[1],1);
 //			ft_putnbr_fd(pos[2],1);
 		}
+		if (pos[2] == 0 || pos[2] ==1)
+			break;
 		i--;
 		x = stack->atop;
 		y = stack->size;
-		z = 0;
+		z = -1;
 	}
 	pre_insert(pos[0], pos[1], stack);
 	pa(stack, 1, 1);
@@ -805,16 +808,9 @@ void sort_1_6 (t_stack *stack)
 	{
 		while  (i < x/2)
 		{
-			if (stack->ab[stack->atop] >= x / 2)
+			if (stack->ab[stack->atop] < x / 2)
 			{
 				pb(stack, 1, 1);
-				if (stack->ab[stack->atop-1] < 3*x/4 && stack->atop>1)
-				{
-					if (stack->atop < x/2)
-						rr(stack, 1, 1);
-					else
-						rb(stack, 1, 1);
-				}
 				i++;
 			}
 			else
@@ -824,20 +820,18 @@ void sort_1_6 (t_stack *stack)
 		while (stack->atop < stack->size-3)
 		{
 			pb(stack, 1, 1);
-			if (stack->ab[stack->atop-1] < x/2)
-				rb(stack, 1, 1);
 			i++;
 		}	
 		sort_1_3(stack);
 
 //		print_stack(stack->ab, stack->atop, stack->size);
 
-		while (i-- > stack->size/2)
-		{
-			insert_lazy(stack, stack->size/2);
+//		while (i-- > stack->size/2)
+//		{
+//			insert_lazy(stack, stack->size/2);
 //			print_stack(stack->ab, stack->atop, stack->size);
 //
-		}
+//		}
 
 		while (i-- >= 0)
 		{

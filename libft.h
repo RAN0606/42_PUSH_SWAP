@@ -6,13 +6,14 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:19:52 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/01 13:25:50 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/15 11:34:15 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include <libc.h>
+
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 

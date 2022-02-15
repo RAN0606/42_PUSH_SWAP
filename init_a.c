@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 12:26:37 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/07 17:33:36 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/08 13:16:05 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,25 +440,19 @@ void	sort_4(t_stack *stack)
 				pb(stack, 1);
 				i++;
 			}
-			else                                                                                                                                                                                                                                                        
+			else
 				ra(stack, 1);
 		}
 		pa(stack, 1);
 	}
 }
 
-
-/*void	action_1(t_stack *stack)
-{
-	while
-}*/
-
 void	sort_5(t_stack *stack)
 {
 	while(!sort_check(stack))
 	{	
-		while (stack->atop < stack->size / 2)
-		{
+		if ()
+		if (!)
 			
 		}	
 }
