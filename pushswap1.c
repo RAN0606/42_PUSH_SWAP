@@ -693,6 +693,7 @@ void pre_insert(int x , int y, t_stack * stack)
 		x++;
 		y++;
 	}
+
 	while (x > 0)
 	{
 		ra(stack, 1, 1);
@@ -716,24 +717,24 @@ void pre_insert(int x , int y, t_stack * stack)
 	}
 
 }
-void insert_lazy(t_stack *stack)
+void insert_lazy(t_stack *stack, int range)
 {
 	int	pos[3];
 
 	pos[0] = 0;
 	pos[1] = 0;
-	pos[2] = 0;
+	pos[2] = -1 ;
 
 	int x;
 	int y;
 	int z;
-	int size;
 	int i;
 
 	i = stack->atop-1;
 	x = stack->atop;
-	y = size;
+	y = stack->size;
 	z = 0;
+
 
 	while (i >= 0 )
 	{
@@ -756,23 +757,35 @@ void insert_lazy(t_stack *stack)
 			}
 			x = y;
 		}
-		if (x - stack->atop <= (size-stack->atop)/2)
+		if (x - stack->atop <=(stack->size-stack->atop)/2)
 			y = x-stack->atop;
 		else
-			y = x - size;
-		if (z <= stack->size / 2)
-			x = stack->atop - 1 - z;
+			y = x - stack->size;
+		if (i >= stack->atop / 2)
+			x = stack->atop - 1 - i;
 		else
 			x = -(i + 1);
-
-		z = cont(x,y);
-		if ( stack->ab[i] >= 50 &&(z < pos[2] || i == stack->atop-1))
+		
+//		ft_putnbr_fd(x,1);
+//		write(1,"x\n",2);
+//		ft_putnbr_fd(y,1);
+//		write(1,"y\n",2);
+//		z = cont(x,y);
+//		ft_putnbr_fd(z,1);
+//		write(1,"z\n",2);
+		if ( stack->ab[i] >= range &&(z < pos[2] || i == stack->atop-1))
 		{
 			pos[0] = y;
 			pos[1] = x;
 			pos[2] = z;
+//			ft_putnbr_fd(pos[0],1);
+//			ft_putnbr_fd(pos[1],1);
+//			ft_putnbr_fd(pos[2],1);
 		}
 		i--;
+		x = stack->atop;
+		y = stack->size;
+		z = 0;
 	}
 	pre_insert(pos[0], pos[1], stack);
 	pa(stack, 1, 1);
@@ -792,9 +805,16 @@ void sort_1_6 (t_stack *stack)
 	{
 		while  (i < x/2)
 		{
-			if (stack->ab[stack->atop] < x / 2)
+			if (stack->ab[stack->atop] >= x / 2)
 			{
 				pb(stack, 1, 1);
+				if (stack->ab[stack->atop-1] < 3*x/4 && stack->atop>1)
+				{
+					if (stack->atop < x/2)
+						rr(stack, 1, 1);
+					else
+						rb(stack, 1, 1);
+				}
 				i++;
 			}
 			else
@@ -804,18 +824,28 @@ void sort_1_6 (t_stack *stack)
 		while (stack->atop < stack->size-3)
 		{
 			pb(stack, 1, 1);
+			if (stack->ab[stack->atop-1] < x/2)
+				rb(stack, 1, 1);
 			i++;
 		}	
 		sort_1_3(stack);
 
-		print_stack(stack->ab, stack->atop, stack->size);
+//		print_stack(stack->ab, stack->atop, stack->size);
 
-		while (i-- > 0)
+		while (i-- > stack->size/2)
 		{
-			insert_lazy(stack);
-			print_stack(stack->ab, stack->atop, stack->size);
+			insert_lazy(stack, stack->size/2);
+//			print_stack(stack->ab, stack->atop, stack->size);
+//
+		}
+
+		while (i-- >= 0)
+		{
+			insert_lazy(stack, 0);
+//			print_stack(stack->ab, stack->atop, stack->size);
 
 		}
+
 		tour_1(stack, 0);
 	
 	}
@@ -1021,7 +1051,7 @@ int main(int argc, char **argv)
 	sort_1_6(stack);
 //	print_stack(stack->inial, stack->atop, argc-1);
 //	print_stack(stack->sort, stack->atop, argc-1);
-	print_stack(stack->ab, stack->atop, argc-1);
+//	print_stack(stack->ab, stack->atop, argc-1);
 	free(stack->ab);
 	free(stack->inial);
 	free(stack->sort);
