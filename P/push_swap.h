@@ -6,7 +6,7 @@
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 10:46:26 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/16 17:13:41 by rliu             ###   ########.fr       */
+/*   Updated: 2022/02/17 15:39:32 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ typedef struct stackswap
 	int	atop;
 	int	size;
 }	t_stack;
+
+/***********************Tools***************************/
+
+int		check_args(int argc, char **argv);
+
+void	stack_free(t_stack *stack);
 
 /*******************Initiate stack**********************/
 

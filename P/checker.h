@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/15 18:31:24 by rliu              #+#    #+#             */
-/*   Updated: 2022/02/17 15:51:12 by rliu             ###   ########.fr       */
+/*   Created: 2022/02/17 11:26:55 by rliu              #+#    #+#             */
+/*   Updated: 2022/02/17 17:15:07 by rliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#ifndef CHECKER_H
+# define CHECKER_H
+# include "push_swap.h"
 
-void stack_free(t_stack *stack)
+typedef struct s_order
 {
-	free(stack->ab);
-	free(stack->inial);
-	free(stack->sort);
-	free(stack);
-}
+	char	*name;
+	void	(*f)(t_stack *, int , int);
+} t_order;
 
-int	main(int argc, char **argv)
-{
-	t_stack	*stack;
-
-	check_args(argc, argv);
-	stack = malloc(sizeof(t_stack));
-	init_stack(stack, argc, argv);
-	if (argc < 5)
-		sort_1_3(stack);
-	else
-		sort_1_6(stack);
-	stack_free(stack);
-	return (0);
-}
+#endif

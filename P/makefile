@@ -6,12 +6,12 @@
 #    By: rliu <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 17:01:08 by rliu              #+#    #+#              #
-#    Updated: 2022/02/16 17:59:09 by rliu             ###   ########.fr        #
+#    Updated: 2022/02/17 15:52:18 by rliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME 	= 	push_swap
 
-SRCS	=	main.c init_stack.c \
+SRCS	=	main.c paras.c init_stack.c \
 			op_r.c op_rr.c op_sp.c \
 			sort_core1.c sort_core2.c sort_utils.c
 
@@ -30,7 +30,7 @@ LFLAGS	=	-L./libft -lft
 
 $(NAME):	$(OBJS)
 			$(MAKE) -C libft
-			gcc $(CFLAGS) $(OBJS) $(LFLAGS) $(IFLAGS) -o $(NAME)
+			gcc $(CFLAGS) $(OBJS) $(LFLAGS) $(IFLAGS) -fsanitize=address -o $(NAME)
 
 all:		$(NAME)
 
