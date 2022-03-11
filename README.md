@@ -27,5 +27,5 @@ wiki: https://en.wikipedia.org/wiki/Merge_sort#Variants
 quick sort and insertion sort
 
 ## How to use
-make 
-make bonus
+- make 
+- make bonus
